@@ -1,0 +1,2105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AY Labs Baking School — ቤት to Birr</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8C97A;
+  --gold-pale: #F5E8C0;
+  --black: #0A0A0A;
+  --dark: #111111;
+  --dark2: #1A1A1A;
+  --dark3: #222222;
+  --white: #FAFAF7;
+  --text-muted: #888880;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-accent: 'Cormorant Garamond', serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* GRAIN OVERLAY */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events:none;
+  z-index:1000;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top:0; left:0; right:0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 60px;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.98), transparent);
+  backdrop-filter: blur(8px);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-logo-mark {
+  width: 38px; height: 38px;
+  background: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--black);
+  letter-spacing: -1px;
+}
+
+.nav-logo-text {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.2;
+}
+
+.nav-logo-text span {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: rgba(250,250,247,0.6);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--gold); }
+
+.nav-cta {
+  background: var(--gold);
+  color: var(--black) !important;
+  padding: 10px 24px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1px !important;
+}
+
+.nav-cta:hover { background: var(--gold-light); color: var(--black) !important; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 40px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* HERO 3D VERSION */
+.hero-3d {
+  text-align: left;
+  align-items: flex-start;
+  perspective: 1400px;
+  padding: 120px 60px 80px;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-glow-1 {
+  background: radial-gradient(circle, rgba(201,168,76,0.5) 0%, transparent 70%);
+  top: -250px; left: 30%;
+  animation: glowPulse 6s ease-in-out infinite;
+}
+.hero-glow-2 {
+  background: radial-gradient(circle, rgba(232,201,122,0.3) 0%, transparent 70%);
+  bottom: -200px; right: 0;
+  animation: glowPulse 8s ease-in-out infinite reverse;
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.15); }
+}
+
+/* 3D Scene */
+.hero-3d-scene {
+  position: absolute;
+  right: 8%; top: 50%;
+  transform: translateY(-50%);
+  width: 480px; height: 480px;
+  transform-style: preserve-3d;
+  animation: sceneRotate 22s linear infinite;
+  z-index: 2;
+}
+@keyframes sceneRotate {
+  from { transform: translateY(-50%) rotateY(0deg); }
+  to { transform: translateY(-50%) rotateY(360deg); }
+}
+
+.cake-shadow {
+  position: absolute;
+  left: 50%; top: 75%;
+  width: 360px; height: 40px;
+  margin-left: -180px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(201,168,76,0.18) 0%, transparent 70%);
+  filter: blur(10px);
+}
+
+.pastry-base {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform-style: preserve-3d;
+}
+
+.cake-layer {
+  position: absolute;
+  left: 50%; top: 50%;
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  box-shadow: inset 0 -40px 50px rgba(0,0,0,0.45),
+              inset 0 25px 40px rgba(255,255,255,0.08);
+}
+.cake-layer-1 {
+  width: 320px; height: 320px;
+  margin: -160px 0 0 -160px;
+  background: radial-gradient(ellipse at 35% 30%, #2a1810 0%, #1a0e08 50%, #0a0604 100%);
+  border: 1px solid rgba(201,168,76,0.15);
+  transform: rotateX(72deg) translateZ(-50px);
+}
+.cake-layer-2 {
+  width: 240px; height: 240px;
+  margin: -120px 0 0 -120px;
+  background: radial-gradient(ellipse at 35% 30%, #4a3520 0%, #2d1f12 60%, #1a1006 100%);
+  border: 1px solid rgba(201,168,76,0.25);
+  transform: rotateX(72deg) translateZ(0px);
+}
+.cake-layer-3 {
+  width: 170px; height: 170px;
+  margin: -85px 0 0 -85px;
+  background: radial-gradient(ellipse at 35% 30%, #C9A84C 0%, #8a6f30 50%, #4d3d1a 100%);
+  border: 1px solid #E8C97A;
+  transform: rotateX(72deg) translateZ(50px);
+}
+.cake-drip {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 170px; height: 80px;
+  margin: -40px 0 0 -85px;
+  transform: rotateX(72deg) translateZ(50px) translateY(-10px);
+  background: radial-gradient(ellipse at 50% 0%, #E8C97A 0%, #C9A84C 50%, transparent 80%);
+  border-radius: 50%;
+  opacity: 0.85;
+}
+
+/* Floating ingredients */
+.float-item {
+  position: absolute;
+  transform-style: preserve-3d;
+  animation: floatY 4s ease-in-out infinite;
+}
+.float-a { top: 30px; left: 40px; animation-delay: 0s; }
+.float-b { top: 60px; right: 50px; animation-delay: 1s; }
+.float-c { bottom: 60px; left: 70px; animation-delay: 2s; }
+.float-d { bottom: 100px; right: 80px; animation-delay: 1.5s; }
+.float-e { top: 50%; left: 0; animation-delay: 0.5s; }
+@keyframes floatY {
+  0%, 100% { transform: translateY(0) rotateY(0deg); }
+  50% { transform: translateY(-18px) rotateY(180deg); }
+}
+
+.float-berry {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #E8C97A 0%, #C9A84C 60%, #6d5320 100%);
+  box-shadow: 0 5px 14px rgba(201,168,76,0.4);
+}
+.float-leaf {
+  width: 32px; height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4a3520, #2d1f12);
+  transform: rotate(-30deg);
+  box-shadow: 0 5px 14px rgba(0,0,0,0.5);
+}
+.float-crumb {
+  width: 18px; height: 18px;
+  background: linear-gradient(135deg, #8a6f30, #4d3d1a);
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  transform: rotate(15deg);
+}
+.float-star {
+  width: 22px; height: 22px;
+  background: #C9A84C;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  box-shadow: 0 0 18px rgba(201,168,76,0.6);
+}
+
+.hero-content-3d {
+  position: relative;
+  z-index: 5;
+  max-width: 55%;
+}
+
+.hero-title-3d em {
+  display: inline-block;
+  transform: translateZ(40px);
+  animation: titlePush 4s ease-in-out infinite;
+}
+@keyframes titlePush {
+  0%, 100% { transform: translateZ(40px); }
+  50% { transform: translateZ(60px); }
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(201,168,76,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 80% 60%, rgba(201,168,76,0.04) 0%, transparent 60%);
+}
+
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.2s;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 9vw, 110px);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -2px;
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.4s;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-subtitle-amharic {
+  font-family: var(--font-accent);
+  font-size: clamp(22px, 4vw, 42px);
+  color: var(--gold-light);
+  font-weight: 300;
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.55s;
+}
+
+.hero-desc {
+  font-size: 16px;
+  color: rgba(250,250,247,0.55);
+  max-width: 520px;
+  line-height: 1.8;
+  margin: 0 auto 52px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.7s;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.85s;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--black);
+  padding: 16px 40px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background: rgba(255,255,255,0.15);
+  opacity:0;
+  transition: opacity 0.3s;
+}
+
+.btn-primary:hover::after { opacity:1; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,168,76,0.35); }
+
+.btn-secondary {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 0.3s;
+}
+.btn-secondary:hover { gap: 14px; }
+.btn-secondary::after { content: '→'; }
+
+.hero-line {
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 1px; height: 80px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  opacity: 0.4;
+}
+
+.hero-badges {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 70px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(201,168,76,0.15);
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 1s;
+}
+
+.badge {
+  text-align: center;
+}
+
+.badge-num {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.badge-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* SECTIONS */
+section {
+  padding: 100px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+
+.section-title em { font-style: italic; color: var(--gold); }
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 560px;
+}
+
+/* DIVIDER */
+.divider {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,168,76,0.2), transparent);
+}
+
+/* COURSES GRID */
+.courses-section { padding: 100px 60px; max-width: 1200px; margin: 0 auto; }
+
+.courses-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.course-card {
+  background: var(--dark2);
+  padding: 44px 36px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s;
+  border: 1px solid rgba(201,168,76,0.08);
+}
+
+.course-card::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, transparent 60%);
+  opacity:0;
+  transition: opacity 0.4s;
+}
+
+.course-card:hover::before { opacity:1; }
+.course-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); }
+
+.course-card.featured {
+  background: linear-gradient(135deg, var(--dark2) 0%, rgba(201,168,76,0.06) 100%);
+  border-color: rgba(201,168,76,0.25);
+  grid-column: span 2;
+}
+
+.course-icon {
+  font-size: 36px;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.course-tag {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.course-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.course-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.course-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.course-meta-item {
+  font-size: 12px;
+  color: rgba(201,168,76,0.7);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.course-badge-new {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: var(--gold);
+  color: var(--black);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+}
+
+/* VIDEO SECTION */
+.video-section {
+  padding: 100px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.video-player {
+  aspect-ratio: 16/9;
+  background: var(--dark2);
+  border: 1px solid rgba(201,168,76,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  group: true;
+}
+
+.video-player-inner {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(201,168,76,0.05) 0%, transparent);
+}
+
+.video-play-btn {
+  width: 72px; height: 72px;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s;
+}
+
+.video-player:hover .video-play-btn {
+  background: var(--gold);
+  transform: scale(1.1);
+}
+
+.video-play-btn svg { fill: var(--gold); transition: fill 0.3s; margin-left: 4px; }
+.video-player:hover .video-play-btn svg { fill: var(--black); }
+
+.video-upload-notice {
+  position: absolute;
+  bottom: 16px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: rgba(201,168,76,0.5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* VIDEO LOCK OVERLAY */
+.video-locked {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  background:
+    radial-gradient(ellipse at center, rgba(201,168,76,0.1) 0%, transparent 70%),
+    linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+  z-index: 5;
+  gap: 14px;
+}
+
+.video-locked-icon {
+  font-size: 42px;
+  margin-bottom: 4px;
+  opacity: 0.7;
+}
+
+.video-locked-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.5px;
+}
+
+.video-locked-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 340px;
+}
+
+.video-locked-or {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 3px;
+  margin-top: 4px;
+}
+
+.video-unlock-btn {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 10px 22px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.video-unlock-btn:hover {
+  background: rgba(201,168,76,0.08);
+  border-color: var(--gold);
+}
+
+.locked-tag {
+  color: rgba(201,168,76,0.7);
+  font-weight: 500;
+}
+
+/* UNLOCK MODAL */
+.unlock-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.unlock-modal.open { display: flex; animation: fadeIn 0.3s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.unlock-modal-box {
+  background: linear-gradient(135deg, var(--dark2) 0%, rgba(201,168,76,0.05) 100%);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 48px 40px;
+  max-width: 440px;
+  width: 100%;
+  position: relative;
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.unlock-modal-close {
+  position: absolute;
+  top: 18px; right: 22px;
+  font-size: 28px;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.3s;
+}
+
+.unlock-modal-close:hover { color: var(--gold); }
+
+.video-lessons {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lesson-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 24px;
+  background: var(--dark2);
+  border: 1px solid rgba(201,168,76,0.06);
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.lesson-row:hover {
+  border-color: rgba(201,168,76,0.25);
+  background: var(--dark3);
+}
+
+.lesson-row.active {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.06);
+}
+
+.lesson-num {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 900;
+  color: rgba(201,168,76,0.25);
+  min-width: 28px;
+  transition: color 0.3s;
+}
+
+.lesson-row:hover .lesson-num,
+.lesson-row.active .lesson-num { color: var(--gold); }
+
+.lesson-info { flex: 1; }
+
+.lesson-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.lesson-duration {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.lesson-lock {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.lesson-row.active .lesson-lock { color: var(--gold); }
+
+/* INSTRUCTOR */
+.instructor-section {
+  padding: 100px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.instructor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 80px;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.instructor-photo {
+  aspect-ratio: 3/4;
+  background: var(--dark2);
+  border: 1px solid rgba(201,168,76,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.instructor-photo::after {
+  content:'';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(to top, rgba(201,168,76,0.1), transparent);
+}
+
+.instructor-photo-placeholder {
+  font-size: 80px;
+  opacity: 0.15;
+}
+
+.instructor-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  filter: contrast(1.05) saturate(1.05);
+  transition: transform 0.6s ease;
+}
+
+.instructor-photo:hover .instructor-img {
+  transform: scale(1.03);
+}
+
+.instructor-photo-label {
+  position: absolute;
+  bottom: 20px; left: 20px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+.instructor-badge {
+  position: absolute;
+  top: 20px; right: -1px;
+  background: var(--gold);
+  color: var(--black);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+}
+
+.instructor-name {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 900;
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+
+.instructor-role {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+}
+
+.instructor-bio {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.9;
+  margin-bottom: 36px;
+}
+
+.instructor-stats {
+  display: flex;
+  gap: 36px;
+}
+
+.i-stat-num {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--gold);
+}
+
+.i-stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+/* PRICING */
+.pricing-section {
+  padding: 100px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 60px;
+  text-align: left;
+}
+
+.price-card {
+  background: var(--dark2);
+  padding: 48px 36px;
+  border: 1px solid rgba(201,168,76,0.08);
+  position: relative;
+  transition: all 0.3s;
+}
+
+.price-card:hover { border-color: rgba(201,168,76,0.25); }
+
+.price-card.highlight {
+  background: linear-gradient(160deg, rgba(201,168,76,0.1) 0%, var(--dark2) 100%);
+  border-color: var(--gold);
+}
+
+.price-tag {
+  position: absolute;
+  top: -1px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold);
+  color: var(--black);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  white-space: nowrap;
+}
+
+.price-tier {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.price-amount {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.price-amount span {
+  font-size: 20px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.price-currency {
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+}
+
+.price-features {
+  list-style: none;
+  margin-bottom: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.price-features li {
+  font-size: 14px;
+  color: rgba(250,250,247,0.7);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price-features li::before {
+  content: '✦';
+  color: var(--gold);
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.btn-enroll {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.4);
+  color: var(--gold);
+  padding: 14px 24px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-enroll:hover {
+  background: var(--gold);
+  color: var(--black);
+  border-color: var(--gold);
+}
+
+.price-card.highlight .btn-enroll {
+  background: var(--gold);
+  color: var(--black);
+  border-color: var(--gold);
+}
+
+.price-card.highlight .btn-enroll:hover {
+  background: var(--gold-light);
+}
+
+/* TESTIMONIALS */
+.testimonials-section {
+  padding: 100px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 60px;
+}
+
+.testimonial-card {
+  background: var(--dark2);
+  padding: 36px;
+  border: 1px solid rgba(201,168,76,0.08);
+  transition: border-color 0.3s;
+}
+
+.testimonial-card:hover { border-color: rgba(201,168,76,0.2); }
+
+.testimonial-stars {
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+
+.testimonial-text {
+  font-family: var(--font-accent);
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(250,250,247,0.85);
+  margin-bottom: 28px;
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.author-avatar {
+  width: 42px; height: 42px;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.author-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.author-location {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* FAQ */
+.faq-section {
+  padding: 100px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 60px;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.faq-item {
+  border: 1px solid rgba(201,168,76,0.08);
+  overflow: hidden;
+}
+
+.faq-q {
+  padding: 22px 24px;
+  background: var(--dark2);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: background 0.3s;
+  user-select: none;
+}
+
+.faq-q:hover { background: var(--dark3); }
+.faq-q.open { border-bottom: 1px solid rgba(201,168,76,0.1); }
+
+.faq-q .faq-icon {
+  color: var(--gold);
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: transform 0.3s;
+}
+
+.faq-q.open .faq-icon { transform: rotate(45deg); }
+
+.faq-a {
+  padding: 0 24px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  background: var(--dark2);
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+.faq-a.open { max-height: 200px; padding: 20px 24px; }
+
+.faq-cta-box {
+  background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, var(--dark2) 100%);
+  border: 1px solid rgba(201,168,76,0.2);
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.faq-cta-box h3 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.faq-cta-box p {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+
+.faq-cta-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 14px;
+  transition: gap 0.3s;
+}
+
+.contact-link:hover { gap: 18px; }
+.contact-link::after { content: '→'; }
+
+/* REGISTER */
+.register-section {
+  padding: 100px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.register-box {
+  background: linear-gradient(135deg, var(--dark2) 0%, rgba(201,168,76,0.05) 100%);
+  border: 1px solid rgba(201,168,76,0.2);
+  padding: 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.register-info h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 20px;
+}
+
+.register-info h2 em { font-style: italic; color: var(--gold); }
+
+.register-info p {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+
+.register-urgency {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--gold);
+}
+
+.urgency-dot {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: pulse 2s ease infinite;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.form-input {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  color: var(--white);
+  padding: 14px 18px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-input:focus { border-color: var(--gold); }
+.form-input::placeholder { color: rgba(250,250,247,0.2); }
+
+.form-select {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  color: var(--white);
+  padding: 14px 18px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.form-select option { background: var(--dark2); }
+
+.form-submit {
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  padding: 18px 32px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 8px;
+}
+
+.form-submit:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(201,168,76,0.3);
+}
+
+.form-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* FOOTER */
+footer {
+  padding: 60px;
+  border-top: 1px solid rgba(201,168,76,0.1);
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.footer-brand span {
+  color: var(--gold);
+}
+
+.footer-copy {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover { color: var(--gold); }
+
+/* UPCOMING BANNER */
+.upcoming-banner {
+  background: rgba(201,168,76,0.06);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+  padding: 16px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  overflow: hidden;
+}
+
+.upcoming-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.upcoming-item .dot {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+.upcoming-item strong { color: var(--gold); font-weight: 600; }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(30px); }
+  to { opacity:1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity:1; transform: scale(1); }
+  50% { opacity:0.5; transform: scale(1.4); }
+}
+
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible { opacity:1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  section, .courses-section, .video-section, .instructor-section,
+  .pricing-section, .testimonials-section, .faq-section, .register-section { padding: 60px 24px; }
+  .courses-grid, .pricing-grid, .testimonials-grid { grid-template-columns: 1fr; }
+  .course-card.featured { grid-column: span 1; }
+  .video-grid, .instructor-grid, .faq-grid { grid-template-columns: 1fr; }
+  .register-box { grid-template-columns: 1fr; padding: 40px 28px; gap: 40px; }
+  footer { padding: 40px 24px; flex-direction: column; text-align: center; }
+  .upcoming-banner { padding: 12px 24px; gap: 20px; flex-wrap: wrap; }
+  .hero-badges { gap: 24px; }
+
+  /* 3D hero mobile */
+  .hero-3d { padding: 100px 24px 60px; text-align: center; align-items: center; }
+  .hero-3d-scene { width: 280px; height: 280px; right: -80px; top: 15%; transform: none; opacity: 0.4; }
+  .hero-content-3d { max-width: 100%; position: relative; z-index: 10; }
+  .hero-title { font-size: 56px !important; letter-spacing: -1.5px; }
+  .hero-subtitle-amharic { font-size: 26px !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-mark">AY</div>
+    <div class="nav-logo-text">
+      Labs Baking School
+      <span>By AYafri Labs PLC</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#lessons">Lessons</a></li>
+    <li><a href="#instructor">Instructor</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="login.html" class="nav-cta">Enroll Now</a></li>
+  </ul>
+</nav>
+
+<!-- UPCOMING COURSES BANNER -->
+<div class="upcoming-banner" style="margin-top:0; padding-top:90px; padding-bottom:16px;">
+  <div class="upcoming-item"><div class="dot"></div><strong>Now Open:</strong> Pastry & Cookie Mastery</div>
+  <div class="upcoming-item"><div class="dot"></div><strong>Coming Soon:</strong> English Language</div>
+  <div class="upcoming-item"><div class="dot"></div><strong>Coming Soon:</strong> Digital Skills</div>
+  <div class="upcoming-item"><div class="dot"></div><strong>Coming Soon:</strong> Business Basics</div>
+</div>
+
+<!-- HERO 3D -->
+<div class="hero hero-3d">
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+
+  <!-- 3D Animated Scene -->
+  <div class="hero-3d-scene">
+    <div class="cake-shadow"></div>
+    <div class="pastry-base">
+      <div class="cake-layer cake-layer-1"></div>
+      <div class="cake-layer cake-layer-2"></div>
+      <div class="cake-drip"></div>
+      <div class="cake-layer cake-layer-3"></div>
+    </div>
+    <div class="float-item float-a"><div class="float-berry"></div></div>
+    <div class="float-item float-b"><div class="float-leaf"></div></div>
+    <div class="float-item float-c"><div class="float-crumb"></div></div>
+    <div class="float-item float-d"><div class="float-star"></div></div>
+    <div class="float-item float-e"><div class="float-berry" style="background: radial-gradient(circle at 30% 30%, #E8C97A 0%, #C9A84C 60%, #6d5320 100%);"></div></div>
+  </div>
+
+  <div class="hero-content-3d">
+    <div class="hero-eyebrow">AY Labs Baking School · Est. 2026</div>
+
+    <h1 class="hero-title hero-title-3d">
+      Bake.<br/><em>Sell.</em><br/>Grow.
+    </h1>
+
+    <div class="hero-subtitle-amharic">ቤት to Birr — ዛሬ ይጀምሩ</div>
+
+    <p class="hero-desc">
+      Professional pastry, cookie & bakery training — online, in Amharic, from your home.
+      Turn your kitchen into your business.
+    </p>
+
+    <div class="hero-actions">
+      <a href="login.html" class="btn-primary">Enroll Now</a>
+      <a href="#lessons" class="btn-secondary">Watch Preview</a>
+    </div>
+
+    <div class="hero-badges">
+      <div class="badge">
+        <div class="badge-num">6</div>
+        <div class="badge-label">Video Lessons</div>
+      </div>
+      <div class="badge">
+        <div class="badge-num">100%</div>
+        <div class="badge-label">Online</div>
+      </div>
+      <div class="badge">
+        <div class="badge-num">🍪</div>
+        <div class="badge-label">Cookies First</div>
+      </div>
+      <div class="badge">
+        <div class="badge-num">🇪🇹</div>
+        <div class="badge-label">Amharic</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-line"></div>
+</div>
+
+<!-- COURSES -->
+<div class="divider"></div>
+<div class="courses-section" id="courses">
+  <div class="courses-header">
+    <div>
+      <div class="section-eyebrow">What You Learn</div>
+      <h2 class="section-title">6 Modules.<br/><em>One Business.</em></h2>
+    </div>
+    <p class="section-desc">Every module builds on the last — from your first cookie to running your own home bakery.</p>
+  </div>
+
+  <div class="courses-grid">
+    <div class="course-card featured reveal">
+      <div class="course-badge-new">Start Here</div>
+      <span class="course-icon">🍪</span>
+      <span class="course-tag">Module 01 — Beginner</span>
+      <div class="course-name">Cookies & Sweet Treats</div>
+      <p class="course-desc">Master the foundation — butter cookies, Ethiopian specialties, chocolate chip, shortbread, and creative decoration techniques that sell at any price point.</p>
+      <div class="course-meta">
+        <div class="course-meta-item">✦ 5 Video Lessons</div>
+        <div class="course-meta-item">✦ Recipe PDF</div>
+        <div class="course-meta-item">✦ Beginner Friendly</div>
+      </div>
+    </div>
+
+    <div class="course-card reveal">
+      <span class="course-icon">🥐</span>
+      <span class="course-tag">Module 02 — Intermediate</span>
+      <div class="course-name">Pastry Mastery</div>
+      <p class="course-desc">Laminated doughs, croissants, puff pastry and French techniques adapted for the Ethiopian kitchen.</p>
+      <div class="course-meta">
+        <div class="course-meta-item">✦ 4 Lessons</div>
+        <div class="course-meta-item">✦ Advanced Tips</div>
+      </div>
+    </div>
+
+    <div class="course-card reveal">
+      <span class="course-icon">🎂</span>
+      <span class="course-tag">Module 03 — All Levels</span>
+      <div class="course-name">Cakes & Celebration</div>
+      <p class="course-desc">Layer cakes, fondant work, and celebration designs. Professional results from your own kitchen.</p>
+      <div class="course-meta">
+        <div class="course-meta-item">✦ 5 Lessons</div>
+        <div class="course-meta-item">✦ Decoration Guide</div>
+      </div>
+    </div>
+
+    <div class="course-card reveal">
+      <span class="course-icon">🍞</span>
+      <span class="course-tag">Module 04 — Hands-On</span>
+      <div class="course-name">Bread & Bakery</div>
+      <p class="course-desc">Sourdough, enriched breads, and artisan loaves. The science and art of professional baking from scratch.</p>
+      <div class="course-meta">
+        <div class="course-meta-item">✦ 4 Lessons</div>
+        <div class="course-meta-item">✦ Techniques</div>
+      </div>
+    </div>
+
+    <div class="course-card reveal">
+      <span class="course-icon">🍬</span>
+      <span class="course-tag">Module 05 — Creative</span>
+      <div class="course-name">Sweets & Chocolates</div>
+      <p class="course-desc">Ethiopian and international sweets, truffles, and chocolate work. Creative recipes that sell at any market.</p>
+      <div class="course-meta">
+        <div class="course-meta-item">✦ 3 Lessons</div>
+        <div class="course-meta-item">✦ Gift Ideas</div>
+      </div>
+    </div>
+
+    <div class="course-card reveal">
+      <span class="course-icon">💼</span>
+      <span class="course-tag">Module 06 — Business</span>
+      <div class="course-name">Start Your Bakery</div>
+      <p class="course-desc">Pricing, packaging, marketing, and selling your baked goods. Turn your passion into a profitable business.</p>
+      <div class="course-meta">
+        <div class="course-meta-item">✦ 4 Lessons</div>
+        <div class="course-meta-item">✦ Business Plan</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO LESSONS -->
+<div class="divider"></div>
+<div class="video-section" id="lessons">
+  <div class="section-eyebrow">Preview Lessons</div>
+  <h2 class="section-title">Watch Before<br/><em>You Enroll.</em></h2>
+
+  <div class="video-grid">
+    <div class="video-player" id="mainPlayer">
+      <!-- LOCKED OVERLAY (default state) -->
+      <div class="video-locked" id="videoLocked">
+        <div class="video-locked-icon">🔒</div>
+        <div class="video-locked-title">Premium Bakery Lesson</div>
+        <div class="video-locked-desc">This video is reserved for enrolled students only.<br/>Register today to unlock the full bakery training.</div>
+        <a href="login.html" class="btn-primary" style="margin-top:8px;">Enroll to Unlock</a>
+        <div class="video-locked-or">— or —</div>
+        <button class="video-unlock-btn" onclick="window.location.href='login.html'">I'm already registered</button>
+      </div>
+
+      <!-- VIDEO (hidden until unlocked) -->
+      <video id="bakeryVideo" controls preload="metadata" style="width:100%;height:100%;display:none;background:#000;">
+        <source src="baking-intro.mp4" type="video/mp4"/>
+        Your browser does not support video playback.
+      </video>
+    </div>
+
+    <div class="video-lessons" id="lessonList">
+      <div class="lesson-row active" onclick="selectLesson(this, 1)">
+        <div class="lesson-num">01</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Bakery Foundations — Full Lesson</div>
+          <div class="lesson-duration"><span class="locked-tag">🔒 Enrolled Only</span> · Premium</div>
+        </div>
+        <div class="lesson-lock">🔒</div>
+      </div>
+      <div class="lesson-row" onclick="selectLesson(this, 2)">
+        <div class="lesson-num">02</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Butter Cookie Fundamentals</div>
+          <div class="lesson-duration"><span class="locked-tag">🔒 Enrolled Only</span> · 12 min</div>
+        </div>
+        <div class="lesson-lock">🔒</div>
+      </div>
+      <div class="lesson-row" onclick="selectLesson(this, 3)">
+        <div class="lesson-num">03</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Ethiopian Sweet Specialties</div>
+          <div class="lesson-duration"><span class="locked-tag">🔒 Enrolled Only</span> · 18 min</div>
+        </div>
+        <div class="lesson-lock">🔒</div>
+      </div>
+      <div class="lesson-row" onclick="selectLesson(this, 4)">
+        <div class="lesson-num">04</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Croissant Technique</div>
+          <div class="lesson-duration"><span class="locked-tag">🔒 Enrolled Only</span> · 22 min</div>
+        </div>
+        <div class="lesson-lock">🔒</div>
+      </div>
+      <div class="lesson-row" onclick="selectLesson(this, 5)">
+        <div class="lesson-num">05</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Cake Decoration Mastery</div>
+          <div class="lesson-duration"><span class="locked-tag">🔒 Enrolled Only</span> · 28 min</div>
+        </div>
+        <div class="lesson-lock">🔒</div>
+      </div>
+      <div class="lesson-row" onclick="selectLesson(this, 6)">
+        <div class="lesson-num">06</div>
+        <div class="lesson-info">
+          <div class="lesson-title">Pricing Your Bakes for Profit</div>
+          <div class="lesson-duration"><span class="locked-tag">🔒 Enrolled Only</span> · 15 min</div>
+        </div>
+        <div class="lesson-lock">🔒</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNLOCK MODAL -->
+  <div class="unlock-modal" id="unlockModal">
+    <div class="unlock-modal-box">
+      <div class="unlock-modal-close" onclick="closeUnlockModal()">×</div>
+      <div class="section-eyebrow">Student Access</div>
+      <h3 style="font-family:var(--font-display);font-size:28px;font-weight:900;margin-bottom:10px;line-height:1.2;">Enter Your<br/><em style="color:var(--gold);font-style:italic;">Access Code</em></h3>
+      <p style="color:var(--text-muted);font-size:13px;line-height:1.7;margin-bottom:24px;">Already registered? Enter the access code we sent you to unlock all lessons.</p>
+      <input class="form-input" type="text" id="accessCode" placeholder="Enter your access code" style="margin-bottom:14px;"/>
+      <button class="form-submit" onclick="checkAccessCode()" style="margin-top:0;width:100%;">Unlock Lessons →</button>
+      <div id="unlockError" style="color:#ff6b6b;font-size:12px;margin-top:12px;text-align:center;display:none;">Invalid code. Please check or contact our team.</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:18px;text-align:center;line-height:1.6;">
+        Don't have a code? <a href="https://t.me/AYLabs1" style="color:var(--gold);">Message us on Telegram @AYLabs1</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INSTRUCTOR -->
+<div class="divider"></div>
+<div class="instructor-section" id="instructor">
+  <div class="section-eyebrow">Your Instructor</div>
+
+  <div class="instructor-grid">
+    <div class="instructor-photo reveal">
+      <img src="instructor.jpg" alt="AY Labs Pastry Chef — Lead Instructor" class="instructor-img"/>
+      <div class="instructor-badge">Lead Instructor</div>
+      <div class="instructor-photo-label">AY Labs Pastry Chef</div>
+    </div>
+    <div class="reveal">
+      <div class="instructor-name">Meet Your<br/><em style="font-style:italic;color:var(--gold);">AY Labs Chef</em></div>
+      <div class="instructor-role">Lead Pastry & Bakery Instructor · AY Labs</div>
+      <p class="instructor-bio">
+        A certified professional baker with years of hands-on experience in pastry, cookies, and artisan bread. Our chef brings together traditional Ethiopian baking with modern professional techniques — all taught in Amharic, step by step, from your own kitchen.
+      </p>
+      <p class="instructor-bio">
+        The teaching philosophy: every woman in Ethiopia deserves access to world-class baking knowledge. No expensive school. No commute. Just real results.
+      </p>
+      <div class="instructor-stats">
+        <div>
+          <div class="i-stat-num">6+</div>
+          <div class="i-stat-label">Years Experience</div>
+        </div>
+        <div>
+          <div class="i-stat-num">21</div>
+          <div class="i-stat-label">Day Program</div>
+        </div>
+        <div>
+          <div class="i-stat-num">100%</div>
+          <div class="i-stat-label">Amharic</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="divider"></div>
+<div class="pricing-section" id="pricing">
+  <div class="section-eyebrow" style="text-align:center;">Investment</div>
+  <h2 class="section-title" style="text-align:center;">Choose Your<br/><em>Path.</em></h2>
+  <p class="section-desc" style="margin:0 auto; text-align:center;">One skill. Multiple options. All affordable.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-tier">Starter</div>
+      <div class="price-amount">3,999<span> ETB</span></div>
+      <div class="price-currency">Ethiopian Birr · One Time</div>
+      <ul class="price-features">
+        <li>All 6 Video Modules</li>
+        <li>Recipe PDF Downloads</li>
+        <li>21-Day Access</li>
+        <li>Certificate of Completion</li>
+      </ul>
+      <button class="btn-enroll" onclick="window.location.href='login.html?plan=starter'">Enroll — Starter</button>
+    </div>
+
+    <div class="price-card highlight reveal">
+      <div class="price-tag">Most Popular</div>
+      <div class="price-tier">Full Course</div>
+      <div class="price-amount">5,999<span> ETB</span></div>
+      <div class="price-currency">Ethiopian Birr · One Time</div>
+      <ul class="price-features">
+        <li>Everything in Starter</li>
+        <li>Live Q&A Sessions</li>
+        <li>Private WhatsApp Group</li>
+        <li>Business Starter Guide</li>
+        <li>3 Months Access</li>
+      </ul>
+      <button class="btn-enroll" onclick="window.location.href='login.html?plan=full'">Enroll — Full Course</button>
+    </div>
+
+    <div class="price-card reveal">
+      <div class="price-tier">Business Bundle</div>
+      <div class="price-amount">8,999<span> ETB</span></div>
+      <div class="price-currency">Ethiopian Birr · One Time</div>
+      <ul class="price-features">
+        <li>Everything in Full Course</li>
+        <li>1-on-1 Mentorship (2 sessions)</li>
+        <li>Branded Recipe Cards</li>
+        <li>Social Media Startup Kit</li>
+        <li>Lifetime Access</li>
+      </ul>
+      <button class="btn-enroll" onclick="window.location.href='login.html?plan=bundle'">Enroll — Bundle</button>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="divider"></div>
+<div class="testimonials-section">
+  <div class="section-eyebrow">Why Choose Us</div>
+  <h2 class="section-title">Built For<br/><em>Real Results.</em></h2>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">🇪🇹</div>
+      <p class="testimonial-text">"100% Amharic instruction. No language barrier. No expensive culinary school. Just real, professional baking taught the way Ethiopians learn best."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">A</div>
+        <div>
+          <div class="author-name">Ethiopian-First</div>
+          <div class="author-location">Made for our market</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">📱</div>
+      <p class="testimonial-text">"Watch every lesson on your phone, tablet, or computer. Pause and rewind as many times as you need. Learn at your pace, from your kitchen."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">M</div>
+        <div>
+          <div class="author-name">Mobile-First Design</div>
+          <div class="author-location">Optimized for phones</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">💼</div>
+      <p class="testimonial-text">"It's not just baking — it's building a business. Pricing, packaging, social media marketing, and how to turn your kitchen into income."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">B</div>
+        <div>
+          <div class="author-name">Business Focus</div>
+          <div class="author-location">From bake to birr</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="divider"></div>
+<div class="faq-section">
+  <div class="section-eyebrow">Questions</div>
+  <h2 class="section-title">We've Got<br/><em>Answers.</em></h2>
+
+  <div class="faq-grid">
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Do I need any baking experience? <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">No experience needed at all. Our Starter module begins from absolute zero — we teach you everything step by step in Amharic.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What device do I need? <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">Any smartphone, tablet, or computer. Our platform works on all devices and is optimized for mobile — so you can watch lessons while you bake.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How do I pay? <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">We accept Commercial Bank, Bank of Abyssinia, and Telebirr. After registration, send your payment screenshot to our Telegram (@AYLabs1 or @AYlabs2) or WhatsApp (0960682220 / 0990691220). We approve you within 24 hours.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Is the content in Amharic? <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">Yes! All lessons are taught in Amharic with written materials available in both Amharic and English.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          When does the next cohort start? <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">We open a new cohort every month. Registration closes once seats are filled — enroll now to secure your place in the next cohort.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Will I get a certificate? <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">Yes! Upon completing all modules, you receive an official AY Labs Baking School certificate signed by your instructor and AYafri Labs PLC.</div>
+      </div>
+    </div>
+
+    <div class="faq-cta-box reveal">
+      <h3>Still have<br/><em style="color:var(--gold);font-family:var(--font-display);font-style:italic;">questions?</em></h3>
+      <p>Our team in Addis Ababa is ready to answer everything. Reach out on Telegram or WhatsApp and we'll respond within a few hours.</p>
+      <div class="faq-cta-contact">
+        <a href="https://t.me/AYLabs1" class="contact-link">Telegram: @AYLabs1</a>
+        <a href="https://t.me/AYlabs2" class="contact-link">Telegram: @AYlabs2</a>
+        <a href="https://wa.me/251960682220" class="contact-link">WhatsApp: 0960682220</a>
+        <a href="https://wa.me/251990691220" class="contact-link">WhatsApp: 0990691220</a>
+        <a href="mailto:hello@ayafrilabs.com" class="contact-link">Email the team</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="divider"></div>
+<div class="register-section" id="register">
+  <div class="register-box" style="grid-template-columns:1fr;text-align:center;">
+    <div class="register-info">
+      <div class="section-eyebrow">Enroll Today</div>
+      <h2>Secure Your<br/><em>Seat Now.</em></h2>
+      <p style="max-width:520px;margin:0 auto 24px;">Registration closes when seats fill up. Once it's closed, this cohort is gone. Don't scroll past your next income stream.</p>
+      <div class="register-urgency" style="justify-content:center;margin-bottom:32px;">
+        <div class="urgency-dot"></div>
+        Enrollment currently open — limited seats
+      </div>
+      <a href="login.html" class="btn-primary" style="display:inline-block;padding:18px 50px;font-size:14px;">Reserve My Seat →</a>
+      <div class="form-note" style="margin-top:20px;">Click above to create your account and start enrolling.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="divider"></div>
+<footer>
+  <div class="footer-brand">AY Labs <span>Baking School</span><br/>
+    <span style="font-family:var(--font-body);font-size:11px;font-weight:400;color:var(--text-muted);letter-spacing:2px;">By AYafri Labs PLC · Addis Ababa, Ethiopia</span>
+  </div>
+  <div class="footer-copy">© 2026 AYafri Labs PLC. All rights reserved.</div>
+  <ul class="footer-links">
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="login.html">Enroll</a></li>
+    <li><a href="https://ayafrilabs.com">ayafrilabs.com</a></li>
+  </ul>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// FAQ toggle
+function toggleFaq(el) {
+  const ans = el.nextElementSibling;
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.classList.remove('open');
+    q.nextElementSibling.classList.remove('open');
+  });
+  if (!isOpen) { el.classList.add('open'); ans.classList.add('open'); }
+}
+
+// Lesson select
+function selectLesson(row, lessonNum) {
+  document.querySelectorAll('.lesson-row').forEach(r => r.classList.remove('active'));
+  row.classList.add('active');
+  // If unlocked and lesson 1 (the bakery video), play it
+  if (videoUnlocked && lessonNum === 1) {
+    document.getElementById('bakeryVideo').play();
+  }
+}
+
+// VIDEO UNLOCK SYSTEM
+let videoUnlocked = false;
+const VALID_CODES = ['AYLABS2026', 'BAKE2026', 'STUDENT', 'BAKERY']; // Demo codes
+
+function openUnlockModal() {
+  document.getElementById('unlockModal').classList.add('open');
+  setTimeout(() => document.getElementById('accessCode').focus(), 100);
+}
+
+function closeUnlockModal() {
+  document.getElementById('unlockModal').classList.remove('open');
+  document.getElementById('unlockError').style.display = 'none';
+  document.getElementById('accessCode').value = '';
+}
+
+function checkAccessCode() {
+  const code = document.getElementById('accessCode').value.trim().toUpperCase();
+  const errorEl = document.getElementById('unlockError');
+  if (VALID_CODES.includes(code)) {
+    unlockVideo();
+    closeUnlockModal();
+  } else {
+    errorEl.style.display = 'block';
+  }
+}
+
+function unlockVideo() {
+  videoUnlocked = true;
+  document.getElementById('videoLocked').style.display = 'none';
+  document.getElementById('bakeryVideo').style.display = 'block';
+  // Update all lesson rows to show unlocked state
+  document.querySelectorAll('.lesson-row').forEach(row => {
+    const lock = row.querySelector('.lesson-lock');
+    const tag = row.querySelector('.locked-tag');
+    if (lock) lock.textContent = '▶';
+    if (tag) {
+      tag.textContent = '✓ Unlocked';
+      tag.style.color = 'var(--gold)';
+    }
+  });
+}
+
+// Allow Enter key in modal
+document.addEventListener('DOMContentLoaded', () => {
+  const codeInput = document.getElementById('accessCode');
+  if (codeInput) {
+    codeInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') checkAccessCode();
+    });
+  }
+  // Close modal on backdrop click
+  const modal = document.getElementById('unlockModal');
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeUnlockModal();
+    });
+  }
+});
+
+// Registration — auto-unlock after register
+function submitRegistration() {
+  const name = document.getElementById('regName').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const plan = document.getElementById('regPlan').value;
+  if (!name || !phone || !plan) {
+    alert('Please fill in all fields before submitting.');
+    return;
+  }
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = '✓ Registration Received!';
+  btn.style.background = '#2d6a2d';
+  btn.style.color = '#fff';
+  btn.disabled = true;
+
+  // Auto-unlock the video after registration
+  unlockVideo();
+
+  setTimeout(() => {
+    btn.textContent = 'Reserve My Seat →';
+    btn.style.background = '';
+    btn.style.color = '';
+    btn.disabled = false;
+    ['regName','regPhone','regCity','regPlan'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    alert('🎉 Registration successful! Your bakery video is now unlocked. Scroll up to watch.');
+  }, 2500);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Learning Dashboard — AY Labs Baking School</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8C97A;
+  --black: #0A0A0A;
+  --dark: #111111;
+  --dark2: #1A1A1A;
+  --dark3: #222222;
+  --white: #FAFAF7;
+  --text-muted: #888880;
+  --error: #ff6b6b;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-accent: 'Cormorant Garamond', serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  min-height: 100vh;
+}
+
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events:none;
+  z-index: 1000;
+}
+
+/* TOP NAV */
+.dashboard-nav {
+  background: var(--dark);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-mark {
+  width: 36px; height: 36px;
+  background: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--black);
+}
+
+.nav-brand-text {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.nav-brand-text span {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-name {
+  font-size: 13px;
+  font-weight: 500;
+  text-align: right;
+}
+
+.user-name span {
+  display: block;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+.user-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.btn-logout {
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold);
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-logout:hover {
+  background: rgba(201,168,76,0.1);
+  border-color: var(--gold);
+}
+
+/* REGISTRATION GATE */
+.reg-gate {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.reg-box {
+  max-width: 480px;
+  width: 100%;
+  background: linear-gradient(135deg, var(--dark2) 0%, rgba(201,168,76,0.06) 100%);
+  border: 1px solid rgba(201,168,76,0.25);
+  padding: 56px 44px;
+}
+
+.reg-eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.reg-title {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.reg-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.reg-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.reg-box input:focus {
+  border-color: var(--gold) !important;
+}
+
+.reg-box input::placeholder {
+  color: rgba(250,250,247,0.25);
+}
+
+.reg-box button:hover {
+  background: var(--gold-light) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(201,168,76,0.3);
+}
+
+/* PENDING STATE */
+.pending-screen {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.pending-box {
+  max-width: 540px;
+  background: linear-gradient(135deg, var(--dark2) 0%, rgba(251,191,36,0.05) 100%);
+  border: 1px solid rgba(251,191,36,0.3);
+  padding: 56px 40px;
+}
+
+.pending-icon {
+  font-size: 56px;
+  margin-bottom: 24px;
+  display: inline-block;
+  animation: pulse 2.5s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.85; }
+}
+
+.pending-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 14px;
+  line-height: 1.1;
+}
+
+.pending-title em {
+  color: var(--warning);
+  font-style: italic;
+}
+
+.pending-desc {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+
+.pending-status {
+  background: rgba(251,191,36,0.08);
+  border: 1px solid rgba(251,191,36,0.3);
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  font-size: 13px;
+  color: var(--warning);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-dot {
+  width: 8px; height: 8px;
+  background: var(--warning);
+  border-radius: 50%;
+  animation: pulse 1.5s ease infinite;
+}
+
+.contact-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.contact-btn {
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold);
+  padding: 14px 24px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.contact-btn:hover {
+  background: rgba(201,168,76,0.1);
+  border-color: var(--gold);
+}
+
+/* APPROVED — DASHBOARD */
+.dashboard-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.welcome-section {
+  margin-bottom: 40px;
+}
+
+.welcome-eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.welcome-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.welcome-title em {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.welcome-desc {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.progress-bar-wrap {
+  background: var(--dark2);
+  border: 1px solid rgba(201,168,76,0.15);
+  padding: 20px 24px;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.progress-info {
+  flex: 1;
+}
+
+.progress-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.progress-text {
+  font-size: 13px;
+  color: var(--white);
+}
+
+.progress-bar {
+  flex: 2;
+  height: 8px;
+  background: rgba(255,255,255,0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+  transition: width 0.6s ease;
+}
+
+.progress-percent {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--gold);
+}
+
+/* MAIN VIDEO */
+.video-section {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.video-player-wrap {
+  background: var(--dark2);
+  border: 1px solid rgba(201,168,76,0.15);
+}
+
+.main-video {
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: block;
+  background: var(--black);
+}
+
+.video-info {
+  padding: 24px 28px;
+  border-top: 1px solid rgba(201,168,76,0.1);
+}
+
+.video-tag {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.video-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.video-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* MATERIALS SECTION */
+.materials-section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(201,168,76,0.1);
+}
+
+.materials-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.materials-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.materials-soon {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: rgba(251,191,36,0.15);
+  color: var(--warning);
+  padding: 4px 10px;
+  font-weight: 700;
+}
+
+.materials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.material-btn {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(201,168,76,0.15);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  text-align: left;
+  transition: all 0.3s;
+  color: var(--white);
+  width: 100%;
+}
+
+.material-btn:hover {
+  background: rgba(201,168,76,0.06);
+  border-color: rgba(201,168,76,0.35);
+  transform: translateY(-2px);
+}
+
+.material-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.material-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.material-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.material-meta {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.material-action {
+  font-size: 14px;
+  color: var(--gold);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+@media (max-width: 700px) {
+  .materials-grid { grid-template-columns: 1fr; }
+}
+
+/* LESSONS LIST */
+.lessons-panel {
+  background: var(--dark2);
+  border: 1px solid rgba(201,168,76,0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.lessons-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+
+.lessons-header h3 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.lessons-header p {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+.lessons-list {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+.lesson-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-bottom: 1px solid rgba(201,168,76,0.05);
+}
+
+.lesson-item:hover { background: var(--dark3); }
+
+.lesson-item.active {
+  background: rgba(201,168,76,0.06);
+  border-left: 3px solid var(--gold);
+  padding-left: 21px;
+}
+
+.lesson-item.completed .lesson-item-num {
+  background: var(--gold);
+  color: var(--black);
+}
+
+.lesson-item-num {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.lesson-item-info { flex: 1; min-width: 0; }
+
+.lesson-item-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lesson-item-meta {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.lesson-item-icon {
+  font-size: 12px;
+  color: var(--gold);
+  opacity: 0.5;
+}
+
+.lesson-item.completed .lesson-item-icon { opacity: 1; }
+
+.lesson-item.unavailable {
+  opacity: 0.5;
+}
+
+.lesson-item.unavailable .lesson-item-num {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.1);
+  color: var(--text-muted);
+}
+
+.lesson-item.unavailable .lesson-item-icon {
+  font-size: 11px;
+}
+
+.lesson-item.locked {
+  opacity: 0.7;
+}
+
+.lesson-item.locked:hover {
+  background: rgba(255,107,107,0.04);
+}
+
+.lesson-item.locked .lesson-item-num {
+  background: rgba(255,107,107,0.08);
+  border-color: rgba(255,107,107,0.2);
+  color: rgba(255,107,107,0.7);
+}
+
+.lesson-item.locked .lesson-item-icon {
+  color: rgba(255,107,107,0.7);
+  font-size: 12px;
+}
+
+.lesson-item.locked .lesson-item-meta {
+  color: rgba(255,107,107,0.55);
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* MODULES GRID */
+.modules-section {
+  margin-top: 50px;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.module-card {
+  background: var(--dark2);
+  border: 1px solid rgba(201,168,76,0.08);
+  padding: 28px 26px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.module-card:hover {
+  border-color: rgba(201,168,76,0.3);
+  transform: translateY(-3px);
+}
+
+.module-card.module-active {
+  border-color: rgba(201,168,76,0.4);
+  background: linear-gradient(135deg, var(--dark2) 0%, rgba(201,168,76,0.06) 100%);
+}
+
+.module-card.module-locked {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.module-card.module-locked:hover {
+  transform: none;
+  border-color: rgba(201,168,76,0.08);
+}
+
+.module-card.module-active .module-tag {
+  color: var(--gold);
+}
+
+.module-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.module-tag {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.module-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.module-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.module-progress {
+  height: 4px;
+  background: rgba(255,255,255,0.05);
+  margin-top: 14px;
+  overflow: hidden;
+}
+
+.module-progress-fill {
+  height: 100%;
+  background: var(--gold);
+  transition: width 0.6s ease;
+}
+
+/* SECURITY BADGE */
+.security-banner {
+  background: rgba(74,222,128,0.05);
+  border: 1px solid rgba(74,222,128,0.2);
+  padding: 14px 24px;
+  margin-bottom: 30px;
+  font-size: 12px;
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .dashboard-nav { padding: 14px 20px; }
+  .dashboard-main { padding: 24px 20px; }
+  .video-section { grid-template-columns: 1fr; }
+  .modules-grid { grid-template-columns: 1fr; }
+  .lessons-list { max-height: 400px; }
+  .nav-user .user-name { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="dashboard-nav">
+  <div class="nav-brand">
+    <div class="nav-mark">AY</div>
+    <div class="nav-brand-text">
+      Baking School
+      <span>Learning Dashboard</span>
+    </div>
+  </div>
+  <div class="nav-user">
+    <div class="user-name" id="userName">
+      Loading...
+      <span id="userPlan">—</span>
+    </div>
+    <div class="user-avatar" id="userAvatar">?</div>
+    <button class="btn-logout" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<!-- PENDING (shown when not approved yet) -->
+<div class="pending-screen" id="pendingScreen" style="display:none;">
+  <div class="pending-box">
+    <div class="pending-icon">⏳</div>
+    <h1 class="pending-title">Almost There,<br/><em id="pendingName">Student!</em></h1>
+    <p class="pending-desc">
+      Your account is created and waiting for payment confirmation. Once we verify your payment, you'll get instant access to all video lessons, recipes, and the private student community.
+    </p>
+
+    <div class="pending-status">
+      <div class="status-dot"></div>
+      <span>Status: Pending Payment Verification</span>
+    </div>
+
+    <div style="background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2); padding: 20px; margin-bottom: 20px; text-align:left;">
+      <div style="font-size: 11px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px;">📋 Next Steps</div>
+      <ol style="color: var(--text-muted); font-size: 13px; line-height: 1.9; padding-left: 20px;">
+        <li>Pay your selected plan using one of the accounts below</li>
+        <li>Send the payment screenshot to our Telegram or WhatsApp</li>
+        <li>We approve you within 24 hours</li>
+        <li>Refresh this page to access your lessons</li>
+      </ol>
+    </div>
+
+    <div style="background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2); padding: 20px; margin-bottom: 20px; text-align:left;">
+      <div style="font-size: 11px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 14px;">💳 Payment Accounts</div>
+      <div style="display:flex; justify-content:space-between; padding:6px 0; font-size:13px; border-bottom:1px solid rgba(201,168,76,0.08);">
+        <span style="color:var(--text-muted);">Commercial Bank</span>
+        <span style="color:var(--white); font-weight:600;">1000757599043</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:6px 0; font-size:13px; border-bottom:1px solid rgba(201,168,76,0.08);">
+        <span style="color:var(--text-muted);">Bank of Abyssinia</span>
+        <span style="color:var(--white); font-weight:600;">166833574</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding:6px 0; font-size:13px;">
+        <span style="color:var(--text-muted);">Telebirr</span>
+        <span style="color:var(--white); font-weight:600;">0929314778</span>
+      </div>
+    </div>
+
+    <div class="contact-row">
+      <a href="https://t.me/AYLabs1" class="contact-btn">📨 Telegram: @AYLabs1</a>
+      <a href="https://t.me/AYlabs2" class="contact-btn">📨 Telegram: @AYlabs2</a>
+      <a href="https://wa.me/251960682220" class="contact-btn">💬 WhatsApp: 0960682220</a>
+      <a href="https://wa.me/251990691220" class="contact-btn">💬 WhatsApp: 0990691220</a>
+    </div>
+  </div>
+</div>
+
+<!-- APPROVED — FULL DASHBOARD -->
+<div id="approvedScreen" style="display:none;">
+  <div class="dashboard-main">
+
+    <div class="welcome-section">
+      <div class="welcome-eyebrow">Welcome Back</div>
+      <h1 class="welcome-title">Hello, <em id="welcomeName">Student</em></h1>
+      <p class="welcome-desc">Pick up where you left off. Your full library is unlocked.</p>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-info">
+          <div class="progress-label">Your Progress</div>
+          <div class="progress-text" id="progressText">0 of 6 cookie lessons completed</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%;"></div></div>
+        <div class="progress-percent" id="progressPercent">0%</div>
+      </div>
+    </div>
+
+    <div class="security-banner">
+      🔒 You're securely logged in. This content is for AY Labs students only — please do not share.
+    </div>
+
+    <!-- VIDEO + LESSONS -->
+    <div class="video-section">
+      <div class="video-player-wrap">
+        <video class="main-video" controls preload="metadata" id="mainVideo" controlsList="nodownload">
+          <source src="lesson-1.mp4" type="video/mp4"/>
+        </video>
+        <div class="video-info">
+          <div class="video-tag">Module 01 · Lesson 1</div>
+          <div class="video-title" id="currentVideoTitle">Cookie Lesson 1</div>
+          <div class="video-meta">Instructor: AY Labs Pastry Chef · 1:30 minutes</div>
+
+          <!-- LESSON MATERIALS -->
+          <div class="materials-section">
+            <div class="materials-header">
+              <span class="materials-label">📚 Lesson Materials</span>
+              <span class="materials-soon">Coming Soon</span>
+            </div>
+            <div class="materials-grid">
+              <button class="material-btn" onclick="showComingSoon('Recipe PDF')">
+                <div class="material-icon">📖</div>
+                <div class="material-info">
+                  <div class="material-name">Recipe PDF</div>
+                  <div class="material-meta">Step-by-step</div>
+                </div>
+                <div class="material-action">⬇</div>
+              </button>
+              <button class="material-btn" onclick="showComingSoon('Ingredients List')">
+                <div class="material-icon">📝</div>
+                <div class="material-info">
+                  <div class="material-name">Ingredients</div>
+                  <div class="material-meta">Shopping list</div>
+                </div>
+                <div class="material-action">⬇</div>
+              </button>
+              <button class="material-btn" onclick="showComingSoon('Tools & Equipment')">
+                <div class="material-icon">🛠️</div>
+                <div class="material-info">
+                  <div class="material-name">Tools Guide</div>
+                  <div class="material-meta">Equipment list</div>
+                </div>
+                <div class="material-action">⬇</div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lessons-panel">
+        <div class="lessons-header">
+          <h3>Course Lessons</h3>
+          <p>Click any lesson to start watching</p>
+        </div>
+        <div class="lessons-list" id="lessonsList">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULES -->
+    <div class="modules-section">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">Course Modules</div>
+          <h2 class="section-title">Your Curriculum</h2>
+        </div>
+      </div>
+
+      <div class="modules-grid">
+        <div class="module-card module-active">
+          <span class="module-icon">🍪</span>
+          <div class="module-tag">Module 01 · Active</div>
+          <div class="module-name">Cookies & Sweet Treats</div>
+          <div class="module-meta">6 Lessons · Beginner</div>
+          <div class="module-progress"><div class="module-progress-fill" id="module1Progress" style="width: 0%;"></div></div>
+        </div>
+        <div class="module-card module-locked">
+          <span class="module-icon">🥐</span>
+          <div class="module-tag">Module 02</div>
+          <div class="module-name">Pastry Mastery</div>
+          <div class="module-meta">Coming Soon</div>
+          <div class="module-progress"><div class="module-progress-fill" style="width: 0%;"></div></div>
+        </div>
+        <div class="module-card module-locked">
+          <span class="module-icon">🎂</span>
+          <div class="module-tag">Module 03</div>
+          <div class="module-name">Cakes & Celebration</div>
+          <div class="module-meta">Coming Soon</div>
+          <div class="module-progress"><div class="module-progress-fill" style="width: 0%;"></div></div>
+        </div>
+        <div class="module-card module-locked">
+          <span class="module-icon">🍞</span>
+          <div class="module-tag">Module 04</div>
+          <div class="module-name">Bread & Bakery</div>
+          <div class="module-meta">Coming Soon</div>
+          <div class="module-progress"><div class="module-progress-fill" style="width: 0%;"></div></div>
+        </div>
+        <div class="module-card module-locked">
+          <span class="module-icon">🍬</span>
+          <div class="module-tag">Module 05</div>
+          <div class="module-name">Sweets & Chocolates</div>
+          <div class="module-meta">Coming Soon</div>
+          <div class="module-progress"><div class="module-progress-fill" style="width: 0%;"></div></div>
+        </div>
+        <div class="module-card module-locked">
+          <span class="module-icon">💼</span>
+          <div class="module-tag">Module 06</div>
+          <div class="module-name">Start Your Bakery</div>
+          <div class="module-meta">Coming Soon</div>
+          <div class="module-progress"><div class="module-progress-fill" style="width: 0%;"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ============================================
+// AUTH GATE — only logged-in approved users
+// ============================================
+
+const SESSION_KEY = 'aylabs_session';
+const STORAGE_KEY = 'aylabs_users';
+
+const lessons = [
+  // Module 01 - Cookies & Sweet Treats (6 lessons - SEQUENTIAL UNLOCK)
+  { id: 1, title: 'Cookie Lesson 1', duration: '1:30', module: 'Module 01', video: 'lesson-1.mp4' },
+  { id: 2, title: 'Cookie Lesson 2', duration: '1:50', module: 'Module 01', video: 'lesson-2.mp4' },
+  { id: 3, title: 'Cookie Lesson 3', duration: '1:50', module: 'Module 01', video: 'lesson-3.mp4' },
+  { id: 4, title: 'Cookie Lesson 4', duration: '2:30', module: 'Module 01', video: 'lesson-4.mp4' },
+  { id: 5, title: 'Cookie Lesson 5', duration: '1:50', module: 'Module 01', video: 'lesson-5.mp4' },
+  { id: 6, title: 'Cookie Lesson 6', duration: '2:00', module: 'Module 01', video: 'lesson-6.mp4' },
+
+  // Module 02-06 - Coming Soon
+  { id: 7, title: 'Pastry Mastery (Coming Soon)', duration: 'Soon', module: 'Module 02', video: null },
+  { id: 8, title: 'Cakes & Celebration (Coming Soon)', duration: 'Soon', module: 'Module 03', video: null },
+  { id: 9, title: 'Bread & Bakery (Coming Soon)', duration: 'Soon', module: 'Module 04', video: null },
+  { id: 10, title: 'Sweets & Chocolates (Coming Soon)', duration: 'Soon', module: 'Module 05', video: null },
+  { id: 11, title: 'Start Your Bakery (Coming Soon)', duration: 'Soon', module: 'Module 06', video: null },
+];
+
+// SEQUENTIAL UNLOCK LOGIC
+// Lesson is available if: it's lesson 1, OR previous lesson is completed
+function isLessonAvailable(lesson) {
+  if (!lesson.video) return false; // No video = not available
+  if (lesson.id === 1) return true; // First lesson always available
+  const previousLesson = lessons.find(l => l.id === lesson.id - 1);
+  if (!previousLesson) return false;
+  return (currentUser?.completedLessons || []).includes(previousLesson.id);
+}
+
+let currentUser = null;
+
+function getSession() {
+  const s = localStorage.getItem(SESSION_KEY);
+  return s ? JSON.parse(s) : null;
+}
+
+function refreshUser() {
+  const session = getSession();
+  if (!session) return null;
+  // Get latest user data from storage (in case admin approved them)
+  const users = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  const fresh = users.find(u => u.id === session.id);
+  if (fresh) {
+    localStorage.setItem(SESSION_KEY, JSON.stringify(fresh));
+    return fresh;
+  }
+  return session;
+}
+
+function logout() {
+  if (confirm('Logout from your account?')) {
+    localStorage.removeItem(SESSION_KEY);
+    window.location.href = 'login.html';
+  }
+}
+
+function loadDashboard() {
+  // PAID MODE - check session for logged in user
+  const session = localStorage.getItem('aylabs_session');
+
+  if (!session) {
+    // Not logged in - redirect to login
+    window.location.href = 'login.html';
+    return;
+  }
+
+  const sessionUser = JSON.parse(session);
+
+  // Refresh user data from storage (in case admin approved them)
+  const allUsers = JSON.parse(localStorage.getItem('aylabs_users') || '[]');
+  const freshUser = allUsers.find(u => u.id === sessionUser.id);
+
+  if (freshUser) {
+    // Update session with latest data
+    localStorage.setItem('aylabs_session', JSON.stringify(freshUser));
+    currentUser = freshUser;
+  } else {
+    currentUser = sessionUser;
+  }
+
+  // Update nav with user info
+  document.getElementById('userName').childNodes[0].textContent = currentUser.name;
+  document.getElementById('userPlan').textContent =
+    currentUser.plan === 'starter' ? 'Starter Plan' :
+    currentUser.plan === 'full' ? 'Full Course' :
+    currentUser.plan === 'bundle' ? 'Business Bundle' : 'Member';
+  document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+
+  // Check if user is approved
+  if (currentUser.status !== 'approved') {
+    // Not approved yet - show pending screen
+    document.getElementById('pendingScreen').style.display = 'flex';
+    document.getElementById('pendingName').textContent = currentUser.name + '!';
+  } else {
+    // Approved - show full lessons
+    document.getElementById('approvedScreen').style.display = 'block';
+    document.getElementById('welcomeName').textContent = currentUser.name;
+    populateLessons();
+    updateProgress();
+    setupVideoTracking();
+  }
+}
+
+function saveCurrentUser() {
+  // Save progress to user record
+  currentUser.completedLessons = currentUser.completedLessons || [];
+  const allUsers = JSON.parse(localStorage.getItem('aylabs_users') || '[]');
+  const idx = allUsers.findIndex(u => u.id === currentUser.id);
+  if (idx !== -1) {
+    allUsers[idx] = currentUser;
+    localStorage.setItem('aylabs_users', JSON.stringify(allUsers));
+    localStorage.setItem('aylabs_session', JSON.stringify(currentUser));
+  }
+}
+
+function populateLessons() {
+  const list = document.getElementById('lessonsList');
+  const completed = currentUser.completedLessons || [];
+
+  list.innerHTML = lessons.map((l, i) => {
+    const available = isLessonAvailable(l);
+    const isCompleted = completed.includes(l.id);
+    const isComingSoon = !l.video;
+
+    let statusIcon = '🔒';
+    let statusClass = 'unavailable';
+    let metaSuffix = '';
+
+    if (isComingSoon) {
+      statusIcon = '🕐';
+      metaSuffix = '';
+    } else if (isCompleted) {
+      statusIcon = '✓';
+      statusClass = 'completed';
+      metaSuffix = ' · ✓ Watched';
+    } else if (available) {
+      statusIcon = '▶';
+      statusClass = '';
+    } else {
+      // Locked - need to finish previous
+      statusIcon = '🔒';
+      statusClass = 'locked';
+      metaSuffix = ' · Locked';
+    }
+
+    return `
+    <div class="lesson-item ${i === 0 ? 'active' : ''} ${statusClass}" onclick="playLesson(${l.id}, this)">
+      <div class="lesson-item-num">${isCompleted ? '✓' : String(i+1).padStart(2,'0')}</div>
+      <div class="lesson-item-info">
+        <div class="lesson-item-title">${l.title}</div>
+        <div class="lesson-item-meta">${l.module} · ${l.duration}${metaSuffix}</div>
+      </div>
+      <div class="lesson-item-icon">${statusIcon}</div>
+    </div>`;
+  }).join('');
+}
+
+function playLesson(id, el) {
+  const lesson = lessons.find(l => l.id === id);
+  const completed = currentUser.completedLessons || [];
+
+  // Check 1: Coming soon (no video yet)
+  if (!lesson.video) {
+    alert(`📌 "${lesson.title}"\n\nThis module is coming soon! Finish all 6 cookie lessons first.`);
+    return;
+  }
+
+  // Check 2: Sequential lock (must complete previous lesson first)
+  if (!isLessonAvailable(lesson)) {
+    const prevLesson = lessons.find(l => l.id === lesson.id - 1);
+    alert(`🔒 Lesson Locked\n\nYou must finish "${prevLesson.title}" before unlocking "${lesson.title}".\n\nWatch the previous lesson all the way through to unlock the next one.`);
+    return;
+  }
+
+  // Lesson is unlocked — switch UI active state
+  document.querySelectorAll('.lesson-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+
+  // Update video info
+  document.getElementById('currentVideoTitle').textContent = lesson.title;
+  const videoTag = document.querySelector('.video-tag');
+  if (videoTag) videoTag.textContent = `${lesson.module} · Lesson ${lesson.id}`;
+  const videoMeta = document.querySelector('.video-info .video-meta');
+  if (videoMeta) videoMeta.textContent = `Instructor: AY Labs Pastry Chef · ${lesson.duration} minutes`;
+
+  // Load and play the video
+  const video = document.getElementById('mainVideo');
+  const videoSource = video.querySelector('source');
+  videoSource.src = lesson.video;
+  video.load();
+  video.play().catch(e => console.log('Autoplay blocked:', e));
+
+  // Track currently playing for "watched" detection
+  video.dataset.currentLesson = id;
+}
+
+// Mark lesson complete only when watched to ~95% (so they can't skip)
+function showComingSoon(materialName) {
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position: fixed; bottom: 30px; right: 30px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: var(--black); padding: 18px 26px;
+    font-family: var(--font-body); font-size: 13px; font-weight: 600;
+    box-shadow: 0 12px 40px rgba(201,168,76,0.4);
+    z-index: 9999; max-width: 340px; line-height: 1.5;
+    animation: slideInRight 0.4s ease;
+  `;
+  toast.innerHTML = `📚 <strong>${materialName} — Coming Soon!</strong><br/><span style="font-size:11px;opacity:0.85;">We're preparing premium materials. Stay tuned!</span>`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
+}
+
+function setupVideoTracking() {
+  const video = document.getElementById('mainVideo');
+  if (!video) return;
+
+  video.addEventListener('timeupdate', () => {
+    if (!video.duration || video.duration === 0) return;
+    const pct = (video.currentTime / video.duration) * 100;
+    if (pct >= 95) {
+      const lessonId = parseInt(video.dataset.currentLesson || '1');
+      if (currentUser && !currentUser.completedLessons.includes(lessonId)) {
+        currentUser.completedLessons.push(lessonId);
+        saveCurrentUser();
+        updateProgress();
+        populateLessons();
+        showLessonCompleteToast(lessonId);
+      }
+    }
+  });
+}
+
+function showLessonCompleteToast(lessonId) {
+  const lesson = lessons.find(l => l.id === lessonId);
+  const nextLesson = lessons.find(l => l.id === lessonId + 1);
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position: fixed; bottom: 30px; right: 30px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: var(--black); padding: 16px 24px;
+    font-family: var(--font-body); font-size: 13px; font-weight: 600;
+    box-shadow: 0 12px 40px rgba(201,168,76,0.4);
+    z-index: 9999; max-width: 320px; line-height: 1.5;
+    animation: slideInRight 0.4s ease;
+  `;
+  toast.innerHTML = `✓ <strong>${lesson.title} complete!</strong>${nextLesson && nextLesson.video ? `<br/><span style="font-size:11px;opacity:0.8;">${nextLesson.title} is now unlocked 🔓</span>` : ''}`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 4500);
+}
+
+function updateProgress() {
+  const videoLessons = lessons.filter(l => l.video);
+  const total = videoLessons.length;
+  const done = (currentUser.completedLessons || []).filter(id =>
+    videoLessons.find(l => l.id === id)
+  ).length;
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('progressText').textContent = `${done} of ${total} cookie lessons completed`;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPercent').textContent = pct + '%';
+
+  // Update Module 01 progress bar in the modules grid
+  const m1Bar = document.getElementById('module1Progress');
+  if (m1Bar) m1Bar.style.width = pct + '%';
+}
+
+// Initialize
+window.addEventListener('DOMContentLoaded', loadDashboard);
+
+// Auto-refresh status every 10 seconds (so when admin approves, student sees it)
+setInterval(() => {
+  const fresh = refreshUser();
+  if (fresh && currentUser && fresh.status !== currentUser.status) {
+    location.reload();
+  }
+}, 10000);
+
+// Block right-click on video (basic content protection)
+document.addEventListener('contextmenu', (e) => {
+  if (e.target.tagName === 'VIDEO') e.preventDefault();
+});
+</script>
+</body>
+</html>
